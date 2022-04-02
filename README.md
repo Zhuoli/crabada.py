@@ -62,19 +62,6 @@ Follow these instructions to send all available teams mining & to collect reward
    2,12,22,32,42,52 * * * * cd $HOME/crabada.py && python -m bin.mining.reinforceDefense <your address>
    ```
 
-
-# Support for multiple teams
-
-The bot can handle multiple teams, you just need to register their IDs in the .env file:
-
-```bash
-USER_1_TEAM_1="1111"
-USER_1_TEAM_2="2222"
-USER_1_TEAM_3="3333"
-```
-
-Then, you can run any of the scripts described above and they will apply to all of the registered teams.
-
 # Strategies
 
 Crabada can be played in different ways, especially when it comes to reinforcing.
@@ -95,10 +82,27 @@ Creating a strategy is very simple:
 
 1. Duplicate a strategy you like and pick a class name.
 2. Customize the three methods in the class: `query()`, `process()` and `pick()`. 
-3. Add the strategy name to the list in the file *ReinforceStrategyFactory.py*
-4. Write the strategy nae in _.env_ in the `TEAM_X_REINFORCE_STRATEGY` parameter.
+3. Make sure your strategy never borrows crabs more expensive than `REINFORCEMENT_MAX_PRICE`.
+4. Add the strategy name to the list in the file *ReinforceStrategyFactory.py*
+5. Configure _.env_ to use your new strategy via the `TEAM_X_REINFORCE_STRATEGY` parameter.
 
-You can also test the strategy withouth sending transactions using the *testMakeReinforceStrategy.py* script.
+To test the strategy withouth sending transactions, you can play with the *testMakeReinforceStrategy.py* script.
+
+# Support for multiple teams
+
+The bot can handle multiple teams, you just need to register their IDs and strategies in the .env file:
+
+```bash
+USER_1_TEAM_1="1111"
+USER_1_TEAM_1_TASK="mine"
+USER_1_TEAM_1_REINFORCE_STRATEGY="HighestMp"
+
+USER_1_TEAM_2="2222"
+USER_1_TEAM_2_TASK="loot"
+USER_1_TEAM_2_REINFORCE_STRATEGY="HighestBp"
+```
+
+Then, you can run any of the scripts described above and they will apply to all of the registered teams.
 
 
 # System requirements
